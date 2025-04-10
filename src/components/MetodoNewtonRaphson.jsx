@@ -27,14 +27,14 @@ function MetodoNewtonRaphson() {
   ];
 
   const newtonRaphsonMethod = ({ fx, xi, maxIter, tol }) => {
-    const t0 = performance.now(); // ⏱️ Inicio del cronómetro
+    
     const newResults = [];
     let error = 1;
     let iteration = 0;
 
     const parsedFx = parse(fx);
     const parsedDerivative = derivative(fx, 'x');
-
+    const t0 = performance.now(); // ⏱️ Inicio del cronómetro
     while (error > tol / 100 && iteration < maxIter) {
       const fxi = parsedFx.evaluate({ x: xi });
       const fpxi = parsedDerivative.evaluate({ x: xi });
