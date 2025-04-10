@@ -8,6 +8,7 @@ import GeoGebraGraph from './Geogebra'; // Importa la gráfica
 function MetodoFalsaPosicion() {
   const [results, setResults] = useState([]);
   const [fxInput, setFxInput] = useState('');
+  const [executionTime, setExecutionTime] = useState(null); // ⏱️ Nuevo estado
 
   // Campos para el formulario
   const fields = [
@@ -33,6 +34,7 @@ function MetodoFalsaPosicion() {
 
   // Método de Falsa Posición
   const metodoFalsaPosicion = ({ fx, xi, xu, maxIter, tol }) => {
+    const t0 = performance.now(); // ⏱️ Inicio del cronómetro
     const newResults = [];
     let error = 1;
     let iteration = 0;
@@ -73,9 +75,10 @@ function MetodoFalsaPosicion() {
 
       iteration++;
     }
-
+    const t1 = performance.now(); // ⏱️ Fin del cronómetro
     setFxInput(fx); // Guarda la función para graficar
     setResults(newResults); // Guarda los resultados para la tabla
+    setExecutionTime((t1 - t0).toFixed(2)); // Guardamos tiempo en ms con 2 decimales
   };
 
   // Función para manejar el envío del formulario
@@ -101,6 +104,9 @@ function MetodoFalsaPosicion() {
       </form>
       {results.length > 0 && (
         <>
+          <div className='TiempoEjec'>
+            <label><strong>Tiempo de ejecución:</strong> {executionTime} ms</label>
+          </div>
           <ResultTable columns={columns} results={results} />
           <GeoGebraGraph fx={fxInput} xiFinal={results[results.length - 1].xr} /> {/* Aquí pasamos el valor de xr */}
         </>

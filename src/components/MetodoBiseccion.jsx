@@ -3,13 +3,13 @@ import { evaluate } from 'mathjs';
 import InputForm from './InputForm';
 import ResultTable from './ResultTable';
 import './styles/styles.css';
-import GeoGebraGraph from './Geogebra'; // Importa la gráfica
+import GeoGebraGraph from './Geogebra';
 
 function MetodoBiseccion() {
   const [results, setResults] = useState([]);
   const [fxInput, setFxInput] = useState('');
+  const [executionTime, setExecutionTime] = useState(null); // ⏱️ Nuevo estado
 
-  // Campos para el formulario
   const fields = [
     { name: 'fx', label: 'f(x)', type: 'text', required: true },
     { name: 'xi', label: 'Valor inicial (Xi)', type: 'number', required: true },
@@ -31,6 +31,8 @@ function MetodoBiseccion() {
   ];
 
   const metodoBiseccion = ({ fx, xi, xu, tol, maxIter }) => {
+    const t0 = performance.now(); // ⏱️ Inicio del cronómetro
+
     const newResults = [];
     let error = 1;
     let iteration = 0;
@@ -72,13 +74,15 @@ function MetodoBiseccion() {
       iteration++;
     }
 
-    setFxInput(fx); // Guarda la función para graficar
-    setResults(newResults); // Guarda los resultados para la tabla
+    const t1 = performance.now(); // ⏱️ Fin del cronómetro
+
+    setFxInput(fx);
+    setResults(newResults);
+    setExecutionTime((t1 - t0).toFixed(2)); // Guardamos tiempo en ms con 2 decimales
   };
 
-  // Función para manejar el envío del formulario
   const handleFormSubmit = (event) => {
-    event.preventDefault(); // Prevenir recarga de página
+    event.preventDefault();
     const formData = {
       fx: event.target.fx.value,
       xi: parseFloat(event.target.xi.value),
@@ -96,10 +100,14 @@ function MetodoBiseccion() {
         <InputForm fields={fields} />
         <button type="submit">Calcular</button>
       </form>
+
       {results.length > 0 && (
         <>
+          <div style={{ display: 'flex', justifyContent: 'flex-end', marginTop: '10px' }}>
+            <label><strong>Tiempo de ejecución:</strong> {executionTime} ms</label>
+          </div>
           <ResultTable columns={columns} results={results} />
-          <GeoGebraGraph fx={fxInput} xiFinal={results[results.length - 1].xr} /> {/* Aquí pasamos el valor de xr */}
+          <GeoGebraGraph fx={fxInput} xiFinal={results[results.length - 1].xr} />
         </>
       )}
     </div>

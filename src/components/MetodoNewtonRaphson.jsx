@@ -8,6 +8,7 @@ import './styles/styles.css';
 function MetodoNewtonRaphson() {
   const [results, setResults] = useState([]);
   const [fxInput, setFxInput] = useState('');
+  const [executionTime, setExecutionTime] = useState(null); // ⏱️ Nuevo estado
 
   const fields = [
     { name: 'fx', label: 'f(x)', type: 'text', required: true },
@@ -26,6 +27,7 @@ function MetodoNewtonRaphson() {
   ];
 
   const newtonRaphsonMethod = ({ fx, xi, maxIter, tol }) => {
+    const t0 = performance.now(); // ⏱️ Inicio del cronómetro
     const newResults = [];
     let error = 1;
     let iteration = 0;
@@ -51,9 +53,10 @@ function MetodoNewtonRaphson() {
       xi = xiPlus1;
       iteration++;
     }
-
+    const t1 = performance.now(); // ⏱️ Fin del cronómetro
     setFxInput(fx); // Guarda la función para graficar
     setResults(newResults); // Guarda los resultados para la tabla
+    setExecutionTime((t1 - t0).toFixed(2)); // Guardamos tiempo en ms con 2 decimales
   };
   const handleFormSubmit = (event) => {
     event.preventDefault();
@@ -75,6 +78,9 @@ function MetodoNewtonRaphson() {
       </form>
       {results.length > 0 && (
         <>
+          <div className='TiempoEjec'>
+            <label><strong>Tiempo de ejecución:</strong> {executionTime} ms</label>
+          </div>
           <ResultTable columns={columns} results={results} />
           <GeoGebraGraph fx={fxInput} xiFinal={results[results.length - 1].xiPlus1} />
         </>
