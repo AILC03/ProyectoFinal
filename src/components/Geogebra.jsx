@@ -20,8 +20,7 @@ function GeoGebraGraph({ fx, xiFinal }) {
 
         // Dibuja el punto en la curva con coordenadas (xiFinal, f(xiFinal))
         try {
-          const fxVal = evaluate(fx.replace(/x/g, `(${xiFinal})`)); // eval para obtener f(xiFinal)
-          api.evalCommand(`A = (${xiFinal}, ${fxVal})`);
+          api.evalCommand(`A = (${xiFinal}, 0)`);
           api.setColor("A", 255, 0, 0);
           api.setPointSize("A", 5);
         } catch (error) {
