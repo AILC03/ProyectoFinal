@@ -4,6 +4,7 @@ import MetodoBiseccion from "./components/MetodoBiseccion";
 import PuntoFijo from "./components/MetodoPuntoFijo";
 import MetodoFalsaPosicion from "./components/MetodoFalsaPosicion";
 import MetodoNewtonRaphson from "./components/MetodoNewtonRaphson";
+import MetodoGauss from "./components/MetodoGaussSeidel";
 
 function App() {
   return (
@@ -13,7 +14,9 @@ function App() {
         <Route path="/punto-fijo" element={<PuntoFijo />} />
         <Route path="/biseccion" element={<MetodoBiseccion />} />
         <Route path="/falsa-posicion" element={<MetodoFalsaPosicion />} />
+        <Route path="/Gauss-seidel" element={<MetodoGauss />} />
         <Route path="/newton-raphson" element={<MetodoNewtonRaphson />} />
+
       </Routes>
     </Router>
   );

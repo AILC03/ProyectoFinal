@@ -103,7 +103,7 @@ function MetodoBiseccion() {
 
       {results.length > 0 && (
         <>
-          <div style={{ display: 'flex', justifyContent: 'flex-end', marginTop: '10px' }}>
+          <div className='TiempoEjec'>
             <label><strong>Tiempo de ejecución:</strong> {executionTime} ms</label>
           </div>
           <ResultTable columns={columns} results={results} />

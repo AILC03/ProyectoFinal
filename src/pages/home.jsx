@@ -26,6 +26,10 @@ const Home = () => {
           <Link to="/newton-raphson">
             <button className="method-button">Método de Newton-Raphson</button>
           </Link>
+          <Link to="/Gauss-seidel">
+            <button className="method-button">Método de Gauss-Seidel</button>
+          </Link>
+        
         </div>
       </form>
     </div>
